@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('show_times', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('email')->unique();
-            $table->text('password');
-            $table->string('phone', 11)->nullable();
-            $table->text('verify_token');
-            $table->boolean('verified_status')->default(false);
+            $table->foreignId('movie_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('theater_id')->constrained()->cascadeOnDelete();
+            $table->timestamp('start_time');
+            $table->timestamp('end_time');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('show_times');
     }
 };

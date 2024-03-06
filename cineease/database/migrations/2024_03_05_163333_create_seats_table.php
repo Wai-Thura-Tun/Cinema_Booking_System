@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('seats', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('email')->unique();
-            $table->text('password');
-            $table->string('phone', 11)->nullable();
-            $table->text('verify_token');
-            $table->boolean('verified_status')->default(false);
+            $table->foreignId('theater_id')->constrained()->cascadeOnDelete();
+            $table->string('row',10);
+            $table->string('number',10);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('seats');
     }
 };
